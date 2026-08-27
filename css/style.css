@@ -1,0 +1,516 @@
+/* ===== がるカフェ ボードゲーム検索・紹介サイト ===== */
+
+@import url("https://fonts.googleapis.com/css2?family=Zen+Kaku+Gothic+New:wght@400;500;700;900&display=swap");
+
+:root {
+  --bg: #ddd8cb;
+  --surface: #faf8f2;
+  --surface-alt: #efe9da;
+  --ink: #1a1a1a;
+  --ink-soft: #6f6a5f;
+  --border: #cfc7b2;
+
+  /* 実サイトのロゴ・マスコットイラストから採った色（黄背景・テラコッタのサイコロ・ミープル） */
+  --accent: #d8623f;
+  --accent-dark: #b34d2f;
+  --yellow: #f4d949;
+  --star: #e0b93a;
+  --green: #6fae4a;
+  --blue: #4a7fd1;
+  --pink: #e8557f;
+
+  --radius: 14px;
+  --shadow: 0 4px 14px rgba(26, 26, 26, 0.1);
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html, body {
+  margin: 0;
+  padding: 0;
+  background: var(--bg);
+}
+
+body {
+  font-family: "Zen Kaku Gothic New", "Hiragino Kaku Gothic ProN", "Hiragino Sans", "Yu Gothic", "Meiryo", sans-serif;
+  color: var(--ink);
+  background: var(--bg);
+  line-height: 1.7;
+}
+
+a {
+  color: inherit;
+}
+
+img {
+  max-width: 100%;
+  display: block;
+}
+
+.site-header {
+  background: var(--bg);
+  color: var(--ink);
+  padding: 44px 16px 30px;
+  text-align: left;
+  max-width: 1080px;
+  margin: 0 auto;
+}
+
+.site-header .eyebrow {
+  display: block;
+  font-size: 0.78rem;
+  font-weight: 700;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--accent-dark);
+  margin-bottom: 10px;
+}
+
+.site-header h1 {
+  margin: 0;
+  font-size: 2.1rem;
+  font-weight: 900;
+  letter-spacing: 0.02em;
+  color: var(--ink);
+}
+
+.site-header .sub {
+  margin-top: 8px;
+  font-size: 0.95rem;
+  color: var(--ink-soft);
+}
+
+.container {
+  max-width: 1080px;
+  margin: 0 auto;
+  padding: 0 16px 56px;
+}
+
+/* ---- 検索・フィルターパネル ---- */
+.search-panel {
+  background: var(--surface-alt);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 18px;
+  margin-bottom: 24px;
+}
+
+.search-box {
+  width: 100%;
+  padding: 11px 16px;
+  font-size: 1rem;
+  font-family: inherit;
+  border: 1px solid var(--border);
+  border-radius: 24px;
+  margin-bottom: 14px;
+  background: var(--surface);
+  color: var(--ink);
+}
+
+.search-box::placeholder {
+  color: var(--ink-soft);
+}
+
+.search-box:focus {
+  outline: none;
+  border-color: var(--accent);
+  box-shadow: 0 0 0 3px rgba(221, 91, 55, 0.18);
+}
+
+.filters {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 12px;
+}
+
+.filter-group label.filter-title {
+  display: block;
+  font-size: 0.76rem;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  color: var(--ink-soft);
+  margin-bottom: 5px;
+}
+
+.filter-group select {
+  width: 100%;
+  padding: 9px 10px;
+  font-family: inherit;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  background: var(--surface);
+  color: var(--ink);
+  font-size: 0.9rem;
+}
+
+.filter-group select:focus {
+  outline: none;
+  border-color: var(--accent);
+}
+
+.result-count {
+  margin: 4px 2px 18px;
+  font-size: 0.88rem;
+  color: var(--ink-soft);
+}
+
+/* ---- カード一覧 ---- */
+.game-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  gap: 20px;
+}
+
+.game-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  overflow: hidden;
+  cursor: pointer;
+  box-shadow: var(--shadow);
+  transition: transform 0.15s ease, box-shadow 0.15s ease;
+  display: flex;
+  flex-direction: column;
+}
+
+.game-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 10px 22px rgba(32, 30, 26, 0.16);
+}
+
+.game-card .thumb {
+  width: 100%;
+  aspect-ratio: 4 / 3;
+  object-fit: cover;
+  background: var(--surface-alt);
+}
+
+.game-card .thumb.placeholder {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--ink-soft);
+  font-size: 0.85rem;
+  text-align: center;
+  background: var(--surface-alt);
+}
+
+.game-card .info {
+  padding: 14px 16px 16px;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.game-card h3 {
+  margin: 0;
+  font-size: 1.08rem;
+  font-weight: 700;
+  color: var(--ink);
+}
+
+.tag-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.tag {
+  display: inline-block;
+  font-size: 0.72rem;
+  font-weight: 500;
+  padding: 3px 10px;
+  border-radius: 999px;
+  background: var(--surface-alt);
+  color: var(--ink-soft);
+  border: 1px solid var(--border);
+}
+
+/* 難易度：マスコットイラストのミープル・ロゴカラー（緑・青・橙・ピンク）から採用 */
+.tag.difficulty-beginner,
+.meta-row .item.difficulty-beginner {
+  background: #e3f0da; color: #3c6b24; border-color: #bcdba0;
+}
+.tag.difficulty-novice,
+.meta-row .item.difficulty-novice {
+  background: #dde9fa; color: #24457e; border-color: #a8c4ec;
+}
+.tag.difficulty-intermediate,
+.meta-row .item.difficulty-intermediate {
+  background: #fbe3da; color: #8a3216; border-color: #eeb89e;
+}
+.tag.difficulty-advanced,
+.meta-row .item.difficulty-advanced {
+  background: #fbdde7; color: #8a1d43; border-color: #f0a8c2;
+}
+.tag.difficulty-unknown,
+.meta-row .item.difficulty-unknown {
+  background: var(--surface-alt); color: var(--ink-soft);
+}
+
+.no-results {
+  text-align: center;
+  color: var(--ink-soft);
+  padding: 48px 0;
+}
+
+/* ---- 個別ページ ---- */
+.back-link {
+  display: inline-flex;
+  align-items: center;
+  margin-bottom: 20px;
+  padding: 8px 18px;
+  border-radius: 999px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  color: var(--ink);
+  text-decoration: none;
+  font-weight: 700;
+  font-size: 0.88rem;
+  transition: background 0.15s ease, border-color 0.15s ease;
+}
+
+.back-link:hover {
+  background: var(--surface-alt);
+  border-color: var(--accent);
+}
+
+.game-detail {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  overflow: hidden;
+  box-shadow: var(--shadow);
+}
+
+.game-detail .hero {
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  object-fit: cover;
+  background: var(--surface-alt);
+}
+
+.game-detail .hero.placeholder {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--ink-soft);
+  font-size: 1rem;
+  background: var(--surface-alt);
+}
+
+.game-detail .detail-body {
+  padding: 24px;
+}
+
+.game-detail h2 {
+  margin: 0 0 4px;
+  font-weight: 900;
+  color: var(--ink);
+}
+
+.formal-name {
+  font-size: 0.85rem;
+  color: var(--ink-soft);
+  margin-bottom: 12px;
+}
+
+.meta-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-bottom: 16px;
+  font-size: 0.9rem;
+  color: var(--ink-soft);
+}
+
+.meta-row .item {
+  background: var(--surface-alt);
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  padding: 6px 14px;
+}
+
+.description {
+  margin: 16px 0;
+  white-space: pre-wrap;
+  color: var(--ink);
+}
+
+.video-wrap {
+  position: relative;
+  width: 100%;
+  padding-top: 56.25%;
+  margin: 18px 0;
+  border-radius: var(--radius);
+  overflow: hidden;
+  background: var(--ink);
+}
+
+.video-wrap iframe {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  border: none;
+}
+
+section.block {
+  margin-top: 30px;
+  padding-top: 22px;
+  border-top: 1px solid var(--border);
+}
+
+section.block h3 {
+  color: var(--ink);
+  font-weight: 700;
+  margin-top: 0;
+}
+
+/* ---- 評価 ---- */
+.rating-summary {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 10px;
+}
+
+.stars-display {
+  color: var(--star);
+  font-size: 1.2rem;
+  letter-spacing: 2px;
+}
+
+.rating-input .stars {
+  font-size: 1.8rem;
+  letter-spacing: 4px;
+  cursor: pointer;
+  color: var(--border);
+}
+
+.rating-input .stars .star {
+  transition: color 0.1s ease;
+}
+
+.rating-input .stars .star.active {
+  color: var(--star);
+}
+
+.rating-note {
+  font-size: 0.85rem;
+  color: var(--ink-soft);
+  margin-top: 6px;
+}
+
+/* ---- コメント ---- */
+.comment-form {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  max-width: 480px;
+}
+
+.comment-form input[type="text"],
+.comment-form textarea {
+  padding: 10px 14px;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  font-size: 0.95rem;
+  font-family: inherit;
+  background: var(--surface);
+  color: var(--ink);
+}
+
+.comment-form input[type="text"]:focus,
+.comment-form textarea:focus {
+  outline: none;
+  border-color: var(--accent);
+}
+
+.comment-form textarea {
+  min-height: 80px;
+  resize: vertical;
+}
+
+.btn {
+  display: inline-block;
+  background: var(--accent);
+  color: #fff;
+  border: none;
+  border-radius: 999px;
+  padding: 11px 26px;
+  font-size: 0.95rem;
+  font-weight: 700;
+  font-family: inherit;
+  cursor: pointer;
+  align-self: flex-start;
+  transition: background 0.15s ease;
+}
+
+.btn:hover {
+  background: var(--accent-dark);
+}
+
+.comment-list {
+  margin-top: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.comment-item {
+  background: var(--surface-alt);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 12px 16px;
+}
+
+.comment-item .comment-head {
+  display: flex;
+  justify-content: space-between;
+  font-size: 0.85rem;
+  color: var(--ink);
+  font-weight: 700;
+  margin-bottom: 4px;
+}
+
+.comment-item .comment-date {
+  color: var(--ink-soft);
+  font-weight: 400;
+}
+
+.comment-empty {
+  color: var(--ink-soft);
+  font-size: 0.9rem;
+}
+
+.not-found {
+  text-align: center;
+  padding: 60px 20px;
+  color: var(--ink-soft);
+}
+
+/* ---- レスポンシブ ---- */
+@media (max-width: 720px) {
+  .filters {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 480px) {
+  .filters {
+    grid-template-columns: 1fr 1fr;
+  }
+  .site-header {
+    padding: 32px 16px 24px;
+  }
+  .site-header h1 {
+    font-size: 1.6rem;
+  }
+  .game-grid {
+    grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+  }
+}

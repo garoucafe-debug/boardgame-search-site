@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ボードゲーム検索 | ボードゲームカフェ</title>
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+<header class="site-header">
+  <span class="eyebrow">Garu Cafe / Board Games</span>
+  <h1>ボードゲームをさがす</h1>
+  <div class="sub">がるカフェで遊べるボードゲームを検索できます</div>
+</header>
+
+<main class="container">
+
+  <div class="search-panel">
+    <input type="text" id="search-box" class="search-box" placeholder="ゲーム名で検索...">
+
+    <div class="filters">
+      <div class="filter-group">
+        <label class="filter-title" for="filter-players">プレイ人数</label>
+        <select id="filter-players">
+          <option value="">すべて</option>
+          <option value="1">1人</option>
+          <option value="2">2人</option>
+          <option value="3-4">3〜4人</option>
+          <option value="5+">5人以上</option>
+        </select>
+      </div>
+
+      <div class="filter-group">
+        <label class="filter-title" for="filter-time">プレイ時間</label>
+        <select id="filter-time">
+          <option value="">すべて</option>
+          <option value="0-30">30分以内</option>
+          <option value="30-60">30〜60分</option>
+          <option value="60-120">60〜120分</option>
+          <option value="120+">120分以上</option>
+        </select>
+      </div>
+
+      <div class="filter-group">
+        <label class="filter-title" for="filter-genre">ジャンル</label>
+        <select id="filter-genre">
+          <option value="">すべて</option>
+        </select>
+      </div>
+
+      <div class="filter-group">
+        <label class="filter-title" for="filter-difficulty">難易度</label>
+        <select id="filter-difficulty">
+          <option value="">すべて</option>
+          <option value="入門">入門</option>
+          <option value="初級">初級</option>
+          <option value="中級">中級</option>
+          <option value="上級">上級</option>
+        </select>
+      </div>
+    </div>
+  </div>
+
+  <div class="result-count" id="result-count"></div>
+
+  <div class="game-grid" id="game-grid"></div>
+  <div class="no-results" id="no-results" style="display:none;">条件に一致するゲームが見つかりませんでした。</div>
+
+</main>
+
+<script src="js/config.js"></script>
+<script src="js/data-loader.js"></script>
+<script src="js/main.js"></script>
+</body>
+</html>
