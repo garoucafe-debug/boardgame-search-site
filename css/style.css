@@ -4,11 +4,11 @@
 
 :root {
   --bg: #dddcd4;
-  --surface: #faf8f2;
-  --surface-alt: #efe9da;
+  --surface: #f7f6f2;
+  --surface-alt: #e8e7e1;
   --ink: #1a1a1a;
-  --ink-soft: #6f6a5f;
-  --border: #cfc7b2;
+  --ink-soft: #6b6a64;
+  --border: #c7c6bf;
 
   /* 実サイトのロゴ・マスコットイラストから採った色（黄背景・テラコッタのサイコロ・ミープル） */
   --accent: #d8623f;
