@@ -241,10 +241,7 @@ function setupBackLink() {
 }
 
 async function init() {
-  async function init() {
   setupBackLink();
-  const id = getGameId();
-  ...
   const id = getGameId();
   if (!id) {
     renderNotFound();
