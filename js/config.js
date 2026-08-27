@@ -8,4 +8,5 @@
 //
 // 空文字のままにしておくと、data/games.json のデータが表示されます（オフライン確認・デモ用）。
 
-window.SHEET_CSV_URL = "https://docs.google.com/spreadsheets/d/17vusO16RQmZSN1NK8lKzj2cqBSoP5yY6dNoo9AGlkZs/edit?gid=0#gid=0";
+window.SHEET_CSV_URL = "https://docs.google.com/spreadsheets/d/17vusO16RQmZSN1NK8lKzj2cqBSoP5yY6dNoo9AGlkZs/export?format=csv&gid=0";
+
