@@ -227,7 +227,24 @@ function escapeHtml(str) {
   return div.innerHTML;
 }
 
+function setupBackLink() {
+  const link = document.getElementById("back-link");
+  if (!link) return;
+
+  link.addEventListener("click", (e) => {
+    e.preventDefault();
+    window.close();
+    setTimeout(() => {
+      window.location.href = link.href;
+    }, 300);
+  });
+}
+
 async function init() {
+  async function init() {
+  setupBackLink();
+  const id = getGameId();
+  ...
   const id = getGameId();
   if (!id) {
     renderNotFound();
