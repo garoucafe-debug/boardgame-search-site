@@ -101,6 +101,13 @@ function parseRange(text) {
   return { min: Math.min(...values), max: Math.max(...values) };
 }
 
+// ジャンル欄は「/」区切りで最大2ジャンルまで入力できる（例: "ダイス/アクション"）。
+function parseGenres(text) {
+  const s = String(text ?? "").trim();
+  if (!s) return [];
+  return s.split("/").map(g => g.trim()).filter(Boolean).slice(0, 2);
+}
+
 // --- 行データ・オブジェクトを共通のゲーム形式に正規化 ---
 function normalizeGame(raw) {
   const playersText = String(raw["推奨プレイ人数"] ?? "").trim();
@@ -112,6 +119,7 @@ function normalizeGame(raw) {
   const timeRange = parseRange(timeText);
 
   const lendableRaw = String(raw["貸出可否"] ?? "").trim();
+  const genres = parseGenres(raw["ジャンル"]);
 
   return {
     id: String(raw["No."] ?? "").trim(),
