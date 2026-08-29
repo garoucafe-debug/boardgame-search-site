@@ -125,7 +125,8 @@ function normalizeGame(raw) {
     id: String(raw["No."] ?? "").trim(),
     name: String(raw["名前"] ?? "").trim(),
     formal_name: String(raw["正式名称"] ?? "").trim(),
-    genre: String(raw["ジャンル"] ?? "").trim(),
+    genres: genres,
+    genre: genres.join(" / "),
     players_text: playersText,
     // 「不明」「不問」は上限なし扱い（絞り込みでは常にマッチさせる）
     players_min: minFromColumn ?? playersFromText.min ?? 0,
