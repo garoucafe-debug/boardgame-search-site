@@ -92,6 +92,11 @@ function renderGame(game) {
     ? `<span class="item">🎂 ${game.age}</span>`
     : "";
 
+  const genreHtml = (game.genres.length > 0 ? game.genres : ["ジャンル不明"])
+    .map(g => `<span class="item">🎯 ${g}</span>`)
+    .join("");
+
+
   const youtubeId = extractYoutubeId(game.youtube_url);
   const videoHtml = youtubeId
     ? `<section class="block">
@@ -115,7 +120,7 @@ function renderGame(game) {
         <div class="meta-row">
           <span class="item">👥 ${playersLabel(game)}</span>
           <span class="item">⏱ ${timeLabel(game)}</span>
-          <span class="item">🎯 ${game.genre || "ジャンル不明"}</span>
+          ${genreHtml}
           <span class="item difficulty-${difficultyClass}">📶 ${difficultyLabel}</span>
           ${ageHtml}
         </div>
