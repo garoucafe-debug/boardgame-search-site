@@ -27,8 +27,9 @@ async function loadGames() {
 
 // ジャンルはスプレッドシートの自由記述のため、実際に登場する値からドロップダウンを自動生成する
 function populateGenreOptions() {
-  const genres = [...new Set(allGames.map(g => g.genre).filter(Boolean))]
+  const genres = [...new Set(allGames.flatMap(g => g.genres))]
     .sort((a, b) => a.localeCompare(b, "ja"));
+
 
   genres.forEach(genre => {
     const option = document.createElement("option");
@@ -73,7 +74,7 @@ function getFilteredGames() {
     if (keyword && !game.name.toLowerCase().includes(keyword)) return false;
     if (!matchesPlayers(game, players)) return false;
     if (!matchesTime(game, time)) return false;
-    if (genre && game.genre !== genre) return false;
+    if (genre && !game.genres.includes(genre)) return false;
     if (difficulty && game.difficulty !== difficulty) return false;
     return true;
   });
@@ -102,6 +103,9 @@ function createCard(game) {
     : `<div class="thumb placeholder">No Image</div>`;
 
   const difficultyClass = DIFFICULTY_CLASS[game.difficulty] || "unknown";
+  const genreTags = (game.genres.length > 0 ? game.genres : ["ジャンル不明"])
+    .map(g => `<span class="tag">${g}</span>`)
+    .join("");
 
   card.innerHTML = `
     ${thumbHtml}
@@ -110,7 +114,7 @@ function createCard(game) {
       <div class="tag-row">
         <span class="tag">${playersLabel(game)}</span>
         <span class="tag">${timeLabel(game)}</span>
-        <span class="tag">${game.genre || "ジャンル不明"}</span>
+        ${genreTags}
         <span class="tag difficulty-${difficultyClass}">${game.difficulty || "難易度不明"}</span>
       </div>
     </div>
