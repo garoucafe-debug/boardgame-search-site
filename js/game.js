@@ -96,7 +96,6 @@ function renderGame(game) {
     .map(g => `<span class="item">🎯 ${g}</span>`)
     .join("");
 
-
   const youtubeId = extractYoutubeId(game.youtube_url);
   const videoHtml = youtubeId
     ? `<section class="block">
@@ -110,6 +109,10 @@ function renderGame(game) {
   const descriptionHtml = game.description
     ? `<p class="description">${game.description}</p>`
     : `<p class="description">紹介文は準備中です。</p>`;
+
+  const placeHtml = game.place
+    ? `<p class="place-info">📍 設置場所: ${game.place}</p>`
+    : "";
 
   document.getElementById("game-content").innerHTML = `
     <div class="game-detail">
@@ -125,6 +128,7 @@ function renderGame(game) {
           ${ageHtml}
         </div>
         ${descriptionHtml}
+        ${placeHtml}
         ${videoHtml}
 
         <section class="block" id="rating-section">
@@ -232,6 +236,8 @@ function escapeHtml(str) {
   return div.innerHTML;
 }
 
+// 「一覧に戻る」：まず元のタブに戻る（このタブを閉じる）ことを試み、
+// 閉じられない場合（新規タブ開きでなかった等）は通常のリンク遷移にフォールバックする
 function setupBackLink() {
   const link = document.getElementById("back-link");
   if (!link) return;
@@ -239,6 +245,7 @@ function setupBackLink() {
   link.addEventListener("click", (e) => {
     e.preventDefault();
     window.close();
+    // window.close() が効かない場合（このタブがスクリプトで開かれたものでない場合など）
     setTimeout(() => {
       window.location.href = link.href;
     }, 300);
