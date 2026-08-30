@@ -136,10 +136,12 @@ function normalizeGame(raw) {
     time_max: timeRange.max,
     age: String(raw["対象年齢"] ?? "").trim(),
     difficulty: String(raw["難易度"] ?? "").trim(),
-    // 以下4列はサイト専用の追加項目。列が無い・空欄でも問題なく動作する
+    // 以下の列はサイト専用の追加項目。列が無い・空欄でも問題なく動作する
     description: String(raw["紹介文"] ?? "").trim(),
     image_filename: String(raw["画像ファイル名"] ?? "").trim(),
     youtube_url: String(raw["YouTube URL"] ?? "").trim(),
+    // 店内の設置場所（例: 「棚A-1」）。検索・絞り込みには使わず、紹介文欄とカード欄に表示するだけの項目
+    place: String(raw["設置場所"] ?? "").trim(),
     // 空欄・"貸出可" は表示、"貸出不可" のときだけ非表示にする
     lendable: lendableRaw !== "貸出不可"
   };
