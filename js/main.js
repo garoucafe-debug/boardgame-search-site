@@ -26,10 +26,10 @@ async function loadGames() {
 }
 
 // ジャンルはスプレッドシートの自由記述のため、実際に登場する値からドロップダウンを自動生成する
+// 1ゲームにつき最大2ジャンル（「/」区切り）持てるため、個々のジャンルに分解してから選択肢を作る
 function populateGenreOptions() {
   const genres = [...new Set(allGames.flatMap(g => g.genres))]
     .sort((a, b) => a.localeCompare(b, "ja"));
-
 
   genres.forEach(genre => {
     const option = document.createElement("option");
@@ -106,6 +106,7 @@ function createCard(game) {
   const genreTags = (game.genres.length > 0 ? game.genres : ["ジャンル不明"])
     .map(g => `<span class="tag">${g}</span>`)
     .join("");
+  const placeTag = game.place ? `<span class="tag">📍 ${game.place}</span>` : "";
 
   card.innerHTML = `
     ${thumbHtml}
@@ -116,6 +117,7 @@ function createCard(game) {
         <span class="tag">${timeLabel(game)}</span>
         ${genreTags}
         <span class="tag difficulty-${difficultyClass}">${game.difficulty || "難易度不明"}</span>
+        ${placeTag}
       </div>
     </div>
   `;
