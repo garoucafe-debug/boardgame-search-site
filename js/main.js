@@ -16,7 +16,7 @@ const els = {
 async function loadGames() {
   try {
     const games = await loadGamesData();
-    // 貸出不可のゲームは一覧に表示しない
+    // 使用不可のゲームは一覧に表示しない
     allGames = games.filter(g => g.lendable);
   } catch (e) {
     allGames = [];
