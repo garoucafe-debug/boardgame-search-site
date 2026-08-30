@@ -262,7 +262,7 @@ async function init() {
   try {
     const games = await loadGamesData();
     const game = games.find(g => String(g.id) === String(id));
-    // 貸出不可のゲームは個別ページも非公開扱いにする
+    // 使用不可のゲームは個別ページも非公開扱いにする
     if (!game || !game.lendable) {
       renderNotFound();
       return;
