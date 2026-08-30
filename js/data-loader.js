@@ -4,7 +4,7 @@
 //
 // スプレッドシートの列名（既存の「ボードゲーム管理表」の列をそのまま使う）：
 // No. / 名前 / 正式名称 / ジャンル / 推奨プレイ人数 / 最大人数 / 最少人数 / プレイ時間 / 対象年齢 / 難易度
-// これに加えてサイト表示用の4列（任意・空欄可）：紹介文 / 画像ファイル名 / YouTube URL / 貸出可否
+// これに加えてサイト表示用の4列（任意・空欄可）：紹介文 / 画像ファイル名 / YouTube URL / 使用可否
 
 // 難易度テキスト → CSSクラス用の英字（表示テキスト自体はスプレッドシートの日本語をそのまま使う）
 const DIFFICULTY_CLASS = {
@@ -118,7 +118,7 @@ function normalizeGame(raw) {
   const playersFromText = parseRange(playersText);
   const timeRange = parseRange(timeText);
 
-  const lendableRaw = String(raw["貸出可否"] ?? "").trim();
+  const lendableRaw = String(raw["使用可否"] ?? "").trim();
   const genres = parseGenres(raw["ジャンル"]);
 
   return {
@@ -142,8 +142,8 @@ function normalizeGame(raw) {
     youtube_url: String(raw["YouTube URL"] ?? "").trim(),
     // 店内の設置場所（例: 「棚A-1」）。検索・絞り込みには使わず、紹介文欄とカード欄に表示するだけの項目
     place: String(raw["設置場所"] ?? "").trim(),
-    // 空欄・"貸出可" は表示、"貸出不可" のときだけ非表示にする
-    lendable: lendableRaw !== "貸出不可"
+    // 空欄・"使用可" は表示、"使用不可" のときだけ非表示にする
+    lendable: lendableRaw !== "使用不可"
   };
 }
 
