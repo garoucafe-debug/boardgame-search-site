@@ -8,6 +8,7 @@ const els = {
   filterTime: document.getElementById("filter-time"),
   filterGenre: document.getElementById("filter-genre"),
   filterDifficulty: document.getElementById("filter-difficulty"),
+  filterPlace: document.getElementById("filter-place"),
   grid: document.getElementById("game-grid"),
   noResults: document.getElementById("no-results"),
   resultCount: document.getElementById("result-count")
@@ -22,6 +23,7 @@ async function loadGames() {
     allGames = [];
   }
   populateGenreOptions();
+  populatePlaceOptions();
   render();
 }
 
@@ -36,6 +38,19 @@ function populateGenreOptions() {
     option.value = genre;
     option.textContent = genre;
     els.filterGenre.appendChild(option);
+  });
+}
+
+// 設置場所も自由記述のため、実際に登場する値からドロップダウンを自動生成する
+function populatePlaceOptions() {
+  const places = [...new Set(allGames.map(g => g.place).filter(p => p))]
+    .sort((a, b) => a.localeCompare(b, "ja"));
+
+  places.forEach(place => {
+    const option = document.createElement("option");
+    option.value = place;
+    option.textContent = place;
+    els.filterPlace.appendChild(option);
   });
 }
 
@@ -69,6 +84,7 @@ function getFilteredGames() {
   const time = els.filterTime.value;
   const genre = els.filterGenre.value;
   const difficulty = els.filterDifficulty.value;
+  const place = els.filterPlace.value;
 
   return allGames.filter(game => {
     if (keyword && !game.name.toLowerCase().includes(keyword)) return false;
@@ -76,6 +92,7 @@ function getFilteredGames() {
     if (!matchesTime(game, time)) return false;
     if (genre && !game.genres.includes(genre)) return false;
     if (difficulty && game.difficulty !== difficulty) return false;
+    if (place && game.place !== place) return false;
     return true;
   });
 }
@@ -133,7 +150,7 @@ function render() {
   els.resultCount.textContent = `${filtered.length}件のゲームが見つかりました`;
 }
 
-[els.searchBox, els.filterPlayers, els.filterTime, els.filterGenre, els.filterDifficulty]
+[els.searchBox, els.filterPlayers, els.filterTime, els.filterGenre, els.filterDifficulty, els.filterPlace]
   .forEach(el => el.addEventListener("input", render));
 
 loadGames();
