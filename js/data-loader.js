@@ -140,7 +140,7 @@ function normalizeGame(raw) {
     description: String(raw["紹介文"] ?? "").trim(),
     image_filename: String(raw["画像ファイル名"] ?? "").trim(),
     youtube_url: String(raw["YouTube URL"] ?? "").trim(),
-    // 店内の設置場所（例: 「棚A-1」）。検索・絞り込みには使わず、紹介文欄とカード欄に表示するだけの項目
+    // 店内の設置場所（例: 「棚A-1」）。紹介文欄とカード欄への表示に加え、一覧ページの絞り込みフィルターにも使う項目
     place: String(raw["設置場所"] ?? "").trim(),
     // 空欄・"使用可" は表示、"使用不可" のときだけ非表示にする
     lendable: lendableRaw !== "使用不可"
